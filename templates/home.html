@@ -8,7 +8,7 @@
     style="width: 30%; max-width: 35%"
   >
     <div class="card-header">
-      <h5 class="fw-bold fs-4 text-uppercase text-start">{{task.taskTitle}}</h5>
+      <h5 class="fw-bold fs-4 text-uppercase text-start">{{task.taskTitle |truncatechars:37}}</h5>
 
       {% for cat in task.categories.all %}
       <span class="badge rounded-pill text-bg-warning"
