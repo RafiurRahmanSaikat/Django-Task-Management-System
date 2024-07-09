@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %}
+<h1 class="text-center">Task Management System</h1>
+
+<main class="container d-flex flex-wrap mx-auto p-2 justify-content-center">
+  {% if data %} {% for task in data %}
+  <div
+    class="card border border-primary m-1"
+    style="width: 30%; max-width: 35%"
+  >
+    <div class="card-header">
+      <h5 class="fw-bold fs-4 text-uppercase text-start">{{task.taskTitle}}</h5>
+
+      {% for cat in task.categories.all %}
+      <span class="badge rounded-pill text-bg-warning"
+        >{{cat.categoryName}}</span
+      >{% endfor %}
+    </div>
+
+    <div class="card-body text-primary-emphasis">
+      <p
+        class="text-secondary-emphasis fs-4"
+        style="height: 15vh; min-height: 25vh; overflow: auto"
+      >
+        {{task.taskDescription}}
+      </p>
+      <div class="card-footer bg-transparent border-danger">
+        <div
+          class="d-flex justify-content-center align-items-center flex-wrap gap-4"
+        >
+          <div class="badge text-bg-warning align-middle fs-5">
+            {{task.taskAssignDate |date:"d M Y "}}
+          </div>
+          {% if task.is_completed %}
+          <div class="badge text-bg-primary rounded-pill align-middle fs-5">
+            Completed
+          </div>
+
+          {% else %}
+          <div class=''>
+            <a href="{% url "edit_task" task.id %}" class="btn btn-outline-primary rounded-pill mx-2">Edit</a>
+            <a href='{% url "delete_task" task.id %}' class="btn btn-danger">Delete</a>
+          </div>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <h1 class="text-danger text-center">No Data Found <br>Please Add</h1>
+  {% endif %}
+</main>
+
+{% endblock content %}
